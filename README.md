@@ -45,6 +45,15 @@ npm run dev
 3. **Control music via the Web GUI** (Accessible via Telegram Mini Apps).
 4. **Manage playlists, listen to live radio, and enjoy a premium music experience!**
 
+## 🚀 Quick Deployment Options
+
+### Deploy on Heroku
+Get started quickly by deploying to Heroku with just one click:
+
+<a href="https://dashboard.heroku.com/new?template=https://github.com/4nuxd/wavetune">
+  <img src="https://img.shields.io/badge/Deploy%20To%20Heroku-red?style=for-the-badge&logo=heroku" width="200"/>
+</a>
+
 ### 🔹 Vercel  
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/4nuxd/wavetune/)  
