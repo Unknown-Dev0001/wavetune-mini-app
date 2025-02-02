@@ -1,7 +1,22 @@
 {
+  "name": "wavetune",
+  "description": "WaveTune - Music Bot",
+  "repository": "https://github.com/4nuxd/wavetune",
+  "keywords": ["music", "bot", "discord", "wave", "node"],
   "buildpacks": [
     {
       "url": "heroku/nodejs"
     }
-  ]
+  ],
+  "scripts": {
+    "heroku-postbuild": "npm install"
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "echo"
+    }
+  },
+  "addons": [],
+  "features": ["runtime-dyno-metadata"]
 }
