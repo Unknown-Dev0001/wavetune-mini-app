@@ -2,6 +2,10 @@
 
 WaveTune is a **feature-rich Telegram music bot** that combines the best features of existing music bots, bringing a **modern web-based GUI** experience to music streaming within Telegram. Built with **TypeScript**, it offers efficiency, scalability, and seamless integration with **Telegram Mini Apps**.
 
+<p align="center">
+  <img src="wavetune.png" alt="WaveTune Logo" width="640">
+</p>
+
 ## 🚀 Features
 - **🌐 Web-Based GUI** – A responsive and interactive UI for seamless music control.
 - **🎶 High-Quality Streaming** – Enjoy smooth and high-quality music playback.
@@ -59,8 +63,8 @@ This project is licensed under the **MIT License** – you are free to use, modi
 
 ### Credits
 WaveTune is inspired by and built upon the work of the following projects:
-- **[YukkiMusicBot](https://github.com/TeamYukki/YukkiMusicBot)** – A feature-rich Telegram music bot.
-- **[Thunder](https://github.com/r2hu1/MusicHub)** – A powerful music streaming bot for Telegram.
+- **[Music Bot](https://github.com/4nuxd/tele-music/)** – A feature-rich Telegram music bot.
+- **[Music Hub](https://github.com/r2hu1/MusicHub)** – A powerful music streaming bot for Telegram.
 
 ---
 
