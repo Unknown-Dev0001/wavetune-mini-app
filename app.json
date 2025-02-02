@@ -8,9 +8,6 @@
       "url": "heroku/nodejs"
     }
   ],
-  "scripts": {
-    "heroku-postbuild": "npm install"
-  },
   "formation": {
     "web": {
       "quantity": 1,
