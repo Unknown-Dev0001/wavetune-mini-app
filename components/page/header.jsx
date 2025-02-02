@@ -10,18 +10,33 @@ import Link from "next/link";
 export default function Header() {
     const path = usePathname();
     console.log(path);
+    
     return (
-        <header className="grid gap-3 pt-5 px-5 pb-5 md:px-20 lg:px-32">
+        <header className="sticky top-0 z-50 bg-white dark:bg-black shadow-md grid gap-3 pt-5 px-5 pb-5 md:px-20 lg:px-32">
             <div className="flex items-center justify-between">
-                {path == "/" ? (
-                    <Button size="icon" onClick={() => { navigator.share({ url: window.location.href }) }} variant="outline" className="rounded-full lg:-ml-4"><Share2 className="w-4 h-4" /></Button>
+                {path === "/" ? (
+                    <Button 
+                        size="icon" 
+                        onClick={() => { navigator.share({ url: window.location.href }) }} 
+                        variant="outline" 
+                        className="rounded-full lg:-ml-4"
+                    >
+                        <Share2 className="w-4 h-4" />
+                    </Button>
                 ) : (
-                    <Button size="icon" asChild variant="outline" className="rounded-full"><Link href="/"><ChevronLeft className="w-5 h-5" /></Link></Button>
+                    <Button 
+                        size="icon" 
+                        asChild 
+                        variant="outline" 
+                        className="rounded-full"
+                    >
+                        <Link href="/"><ChevronLeft className="w-5 h-5" /></Link>
+                    </Button>
                 )}
                 <Logo />
                 <ModeToggle />
             </div>
             <Search />
         </header>
-    )
+    );
 }
