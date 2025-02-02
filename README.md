@@ -54,7 +54,7 @@ Get started quickly by deploying to Heroku with just one click:
   <img src="https://img.shields.io/badge/Deploy%20To%20Heroku-red?style=for-the-badge&logo=heroku" width="200"/>
 </a>
 
-### 🔹 Vercel  
+### Vercel  
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/4nuxd/wavetune/)  
 
