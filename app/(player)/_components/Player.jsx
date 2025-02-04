@@ -1,7 +1,7 @@
 "use client"
 import { Button } from "@/components/ui/button";
-import { getSongsById, getSongsLyricsById } from "@/lib/fetch";
-import { Download, Pause, Play, RedoDot, UndoDot, Repeat, Loader2, Bookmark, BookmarkCheck, Repeat1, Share2 } from "lucide-react";
+import { getSongsById, getSongsLyricsById, getSongsSuggestions } from "@/lib/fetch";
+import { Download, Pause, Play, StepBack, StepForward, RedoDot, UndoDot, Repeat, Loader2, Bookmark, BookmarkCheck, Repeat1, Share2 } from "lucide-react";
 import { useContext, useEffect, useRef, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Slider } from "@/components/ui/slider";
@@ -22,6 +22,8 @@ export default function Player({ id }) {
     const [audioURL, setAudioURL] = useState("");
     const params = useSearchParams();
     const next = useContext(NextContext);
+    const [queue, setQueue] = useState([]);
+
 
     const getSong = async () => {
         const get = await getSongsById(id);
@@ -94,6 +96,43 @@ export default function Player({ id }) {
         }
     }
 
+    const playNextSong = async () => {
+        if (queue.length > 0) {
+            const nextSong = queue[0]; // Get the first song in the queue
+            setQueue(queue.slice(1)); // Remove it from the queue
+            setData(nextSong); // Set the new song data
+            setAudioURL(nextSong.downloadUrl[2]?.url || nextSong.downloadUrl[1]?.url || nextSong.downloadUrl[0]?.url);
+            audioRef.current.play();
+            setPlaying(true);
+        } else if (next?.nextData?.id) {
+            const nextSongId = next.nextData.id;
+            const get = await getSongsById(nextSongId);
+            const data = await get.json();
+            setData(data.data[0]);
+            setAudioURL(data?.data[0]?.downloadUrl[2]?.url || data?.data[0]?.downloadUrl[1]?.url || data?.data[0]?.downloadUrl[0]?.url);
+            audioRef.current.play();
+            setPlaying(true);
+    
+            // Add to queue
+            const recommendedSong = await getSongsSuggestions(nextSongId);
+            const recommendedData = await recommendedSong.json();
+            if (recommendedData?.suggestions && recommendedData.suggestions.length > 0) {
+                setQueue(prevQueue => [...prevQueue, ...recommendedData.suggestions]);
+            }
+        }
+    };        
+    
+    const playPreviousSong = async () => {
+        if (next?.previousData?.id) {
+            const previousSongId = next.previousData.id;
+            const get = await getSongsById(previousSongId);
+            const data = await get.json();
+            setData(data.data[0]);
+            setAudioURL(data?.data[0]?.downloadUrl[2]?.url || data?.data[0]?.downloadUrl[1]?.url || data?.data[0]?.downloadUrl[0]?.url);
+            audioRef.current.play();
+            setPlaying(true);
+        }
+    };
 
     useEffect(() => {
         getSong();
@@ -140,7 +179,13 @@ export default function Player({ id }) {
                             <div className="relative">
                                 <img src={data.image[2].url} className="sm:h-[150px] h-full bg-secondary/50 rounded-2xl sm:w-[200px] w-full object-cover" />
                                 <img src={data.image[2].url} className="hidden dark:block absolute top-0 left-0 w-[110%] h-[110%] blur-3xl -z-10 opacity-50" />
+                            
+                                {/* Button in the top-right corner */}
+                                <Button size="icon" variant="outline" onClick={handleShare} className="absolute top-2 right-2">
+                                    <Share2 className="h-4 w-4" />
+                                </Button>
                             </div>
+
                         )}
                     </div>
                     {data.length <= 0 ? (
@@ -174,28 +219,34 @@ export default function Player({ id }) {
                                     <span className="text-xs">{formatTime(currentTime)}</span>
                                     <span className="text-xs">{formatTime(duration)}</span>
                                 </div>
-                                <div className="flex items-center justify-between mt-2">
-                                    <div className="flex items-center gap-3 sm:mt-0">
-                                        <Button size="icon" variant="outline" onClick={loopSong}>
-                                            {!isLooping ? <Repeat className="h-4 w-4" /> : <Repeat1 className="h-4 w-4" />}
-                                        </Button>
-                                        <Button size="icon" variant={playing ? "gooeyRight" : "gooeyLeft"} onClick={togglePlayPause}>
-                                            {playing ? (
-                                                <Pause className="h-4 w-4" />
-                                            ) : (
-                                                <Play className="h-4 w-4" />
-                                            )}
-                                        </Button>
-                                        <Button size="icon" variant="outline" onClick={downloadSong}>
-                                            {isDownloading ? (
-                                                <Loader2 className="h-4 w-4 animate-spin" />
-                                            ) : (
-                                                <Download className="h-4 w-4" />
-                                            )}
-                                        </Button>
-                                    </div>
-                                    <Button size="icon" variant="outline" onClick={handleShare}><Share2 className="h-4 w-4" /></Button>
+                                <div className="flex items-center justify-center mt-2">
+                                <div className="flex items-center gap-3 sm:mt-0">
+                                    {/* Loop Button */}
+                                    <Button size="icon" variant="outline" onClick={loopSong}>
+                                        {isLooping ? <Repeat1 className="h-4 w-4" /> : <Repeat className="h-4 w-4" />}
+                                    </Button>
+
+                                    {/* Previous Song Button */}
+                                    <Button size="icon" variant="outline" onClick={playPreviousSong}>
+                                        <StepBack className="h-4 w-4" />
+                                    </Button>
+
+                                    {/* Play/Pause Button */}
+                                    <Button size="icon" variant={playing ? "gooeyRight" : "gooeyLeft"} onClick={togglePlayPause}>
+                                        {playing ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+                                    </Button>
+
+                                    {/* Next Song Button */}
+                                    <Button size="icon" variant="outline" onClick={playNextSong}>
+                                        <StepForward className="h-4 w-4" />
+                                    </Button>
+
+                                    {/* Download Button */}
+                                    <Button size="icon" variant="outline" onClick={downloadSong}>
+                                        {isDownloading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Download className="h-4 w-4" />}
+                                    </Button>
                                 </div>
+                            </div>
                             </div>
                         </div>
                     )}
