@@ -73,7 +73,7 @@ This project is licensed under the **MIT License** – you are free to use, modi
 ### Credits
 WaveTune is inspired by and built upon the work of the following projects:
 - **[Music Bot](https://github.com/4nuxd/tele-music/)** – A feature-rich Telegram music bot.
-- **[Music Hub](https://github.com/r2hu1/MusicHub)** – A powerful music streaming bot for Telegram.
+- **[Music Hub](https://github.com/r2hu1/MusicHub)** – A Smooth Web Based Music Player - Thanks For Initial Project
 
 ---
 
