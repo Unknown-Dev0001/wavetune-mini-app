@@ -22,7 +22,7 @@ WaveTune is a **feature-rich Telegram music bot** that combines the best feature
 
 ### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/YourUsername/WaveTune.git
+git clone https://github.com/4nuxd/WaveTune.git
 cd WaveTune
 ```
 
