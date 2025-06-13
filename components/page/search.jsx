@@ -35,7 +35,7 @@ export default function Search({ className }) {
                     type="search"
                     className="rounded-lg bg-secondary/50"
                     name="query"
-                    placeholder="Try Maharani.."
+                    placeholder="Try Indian Phonk..."
                 />
             </form>
         </>
